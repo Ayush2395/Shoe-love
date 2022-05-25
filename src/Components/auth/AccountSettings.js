@@ -49,7 +49,7 @@ export default function AccountSettings() {
       }
 
       if (!currentUser) {
-        navigate("/login");
+        navigate("/error");
       } else if (currentUser) {
         navigate("/myaccount");
       }
@@ -105,8 +105,8 @@ export default function AccountSettings() {
       username: userName,
       address: address,
       pincode: pinCode,
-      gender: gender,
       phoneNum: phoneNum,
+      gender: gender,
     };
 
     try {

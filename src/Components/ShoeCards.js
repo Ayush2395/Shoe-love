@@ -1,7 +1,10 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
+// import { useAppState } from "../context/AppState";
 
 export default function ShoeCards() {
+  // const { itemsCounter } = useAppState();
   return (
     <>
       <Card>
@@ -11,7 +14,10 @@ export default function ShoeCards() {
             className="img-circle"
           />
           <Card.Title>Gucci</Card.Title>
-          <Button className="w-100">Buy now</Button>
+          <Card.Text>Price: 1200</Card.Text>
+          <Button as={Link} to="/product" className="w-100">
+            View
+          </Button>
         </Card.Body>
       </Card>
     </>

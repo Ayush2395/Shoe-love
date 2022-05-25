@@ -7,4 +7,14 @@
 .shoe_item_cards {
   width: 180px;
 }
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background: rgb(54, 54, 54);
+  margin-bottom: 2.5px;
+  margin-top: 2.5px;
+  border-radius: 10px;
+}
+
 /* === === === Home section === === === */

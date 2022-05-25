@@ -53,6 +53,13 @@ export default function AppState({ children }) {
     };
   }, []);
 
+  // Cart functionallity
+  const [count, setCount] = useState(0);
+
+  function itemsCounter() {
+    setCount(count + 1);
+  }
+
   return (
     <>
       <AppContext.Provider
@@ -68,6 +75,8 @@ export default function AppState({ children }) {
           setUserDetails,
           loginUser,
           googleUserLogin,
+          itemsCounter,
+          count
         }}
       >
         {children}

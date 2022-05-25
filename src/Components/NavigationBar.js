@@ -1,14 +1,22 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import {
+  Badge,
+  Button,
+  CloseButton,
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { auth } from "../backend/firebase.config";
 import { useAppState } from "../context/AppState";
 
 export default function NavigationBar() {
   const [userName, setUserName] = useState("username");
-  const { user, signOutUser } = useAppState();
+  const { user, signOutUser, count } = useAppState();
   const [disabledBtn, setDisabledBtn] = useState(true);
   const navigate = useNavigate();
 
@@ -30,6 +38,7 @@ export default function NavigationBar() {
       }
 
       if (!currentUser) {
+        navigate('/error')
         setDisabledBtn(true);
       } else if (currentUser) {
         setDisabledBtn(false);
@@ -43,7 +52,14 @@ export default function NavigationBar() {
           <Navbar.Brand as={Link} to="/">
             Shoe Love <FontAwesomeIcon icon="fa-solid fa-shoe-prints" />
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Toggle
+            className="burger buger_open"
+            aria-controls="basic-navbar-nav"
+          >
+            <div className="burger_1"></div>
+            <div className="burger_2"></div>
+            <div className="burger_3"></div>
+          </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               <Nav.Link as={NavLink} to="/">
@@ -53,8 +69,9 @@ export default function NavigationBar() {
                 <FontAwesomeIcon icon="fa-solid fa-store" /> Shopping
               </Nav.Link>
               <NavDropdown title="More" id="basic-nav-dropdown">
-                <NavDropdown.Item disabled={disabledBtn} href="#action/3.1">
-                  <FontAwesomeIcon icon="fa-solid fa-cart-shopping" /> Cart
+                <NavDropdown.Item as={Link} disabled={disabledBtn} to="/cart">
+                  <FontAwesomeIcon icon="fa-solid fa-cart-shopping" /> Cart{" "}
+                  <Badge>{count}</Badge>
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
