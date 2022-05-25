@@ -1,5 +1,5 @@
 import React from "react";
-import { Badge, Carousel, Col, Row } from "react-bootstrap";
+import { Badge, Carousel } from "react-bootstrap";
 import ShoeCards from "../Components/ShoeCards";
 
 export default function Home() {
@@ -48,20 +48,7 @@ export default function Home() {
         <h1>
           Recents products <Badge className="fs-6 bg-warning">New</Badge>
         </h1>
-        <Row className="mb-5" xs={12}>
-          <Col xs="6" sm="6" lg="3" className="mb-3">
-            <ShoeCards />
-          </Col>
-          <Col xs="6" sm="6" lg="3" className="mb-3">
-            <ShoeCards />
-          </Col>
-          <Col xs="6" sm="6" lg="3" className="mb-3">
-            <ShoeCards />
-          </Col>
-          <Col xs="6" sm="6" lg="3" className="mb-3">
-            <ShoeCards />
-          </Col>
-        </Row>
+        <ShoeCards />
       </section>
     </>
   );

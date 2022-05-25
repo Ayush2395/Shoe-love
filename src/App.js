@@ -67,7 +67,7 @@ export default function App() {
             <Route path="/myaccount" element={<AccountSettings />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/error" element={<Error />} />
-            <Route path="/product" element={<ProductView />} />
+            <Route path="/product/:id/:id" element={<ProductView />} />
           </Routes>
         </Router>
       </AppState>

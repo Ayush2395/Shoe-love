@@ -1,25 +1,44 @@
-import React from "react";
-import { Button, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-// import { useAppState } from "../context/AppState";
+import productView from "../backend/product.view";
 
 export default function ShoeCards() {
-  // const { itemsCounter } = useAppState();
+  const [product, setProduct] = useState([]);
+
+  async function fetchProduct() {
+    const productData = await productView.getProductData();
+    setProduct(productData.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  }
+
+  useEffect(() => {
+    fetchProduct();
+  }, []);
+
   return (
     <>
-      <Card>
-        <Card.Body>
-          <Card.Img
-            src="https://images.unsplash.com/photo-1518894781321-630e638d0742?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHNob2VzfGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=600"
-            className="img-circle"
-          />
-          <Card.Title>Gucci</Card.Title>
-          <Card.Text>Price: 1200</Card.Text>
-          <Button as={Link} to="/product" className="w-100">
-            View
-          </Button>
-        </Card.Body>
-      </Card>
+      <Row className="my-4">
+        {product.map((prod) => {
+          return (
+            <Col key={prod.id} xs="6" sm="6" lg="4">
+              <Card>
+                <Card.Body>
+                  <Card.Img src={prod.imgURL_1} />
+                  <Card.Text>{prod.productName}</Card.Text>
+                  <Card.Text>&#8377; {prod.price}</Card.Text>
+                  <Button
+                    as={Link}
+                    to={`/product/${prod.slug}/${prod.id}`}
+                    className="w-100"
+                  >
+                    View
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          );
+        })}
+      </Row>
     </>
   );
 }

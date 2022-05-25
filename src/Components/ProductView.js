@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -9,15 +9,28 @@ import {
   Form,
   Row,
 } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import productView from "../backend/product.view";
 
 export default function ProductView() {
-  const [shoeSize, setShoeSize] = useState([6, 7, 8, 9, 10]);
-  const [color, setColor] = useState(["Brown", "Black"]);
+  const [product, setProduct] = useState([]);
+
+  const { id } = useParams();
+
+  async function getTheProduct() {
+    const data = await productView.getProductDetails(id);
+    setProduct(data.data());
+  }
+
+  useEffect(() => {
+    getTheProduct();
+  }, []);
+
   return (
     <>
       <Container className="my-5 py-5">
         <Row>
-          <Col sm="12" md="6">
+          <Col sm="12" md="6" className="mb-3">
             <Card>
               <Card.Body>
                 <Carousel>
@@ -68,45 +81,24 @@ export default function ProductView() {
               </Card.Body>
             </Card>
           </Col>
-          <Col sm="12" md="6">
+          <Col sm="12" md="6" className="mb-3">
             <Card style={{ height: "412px" }}>
               <Card.Body>
-                <Card.Text>Brand name</Card.Text>
-                <Card.Title className="fs-1">Product name</Card.Title>
-                <Card.Text>
-                  Size:{" "}
-                  {shoeSize.map((size) => {
-                    return (
-                      <Form.Check
-                        className="mb-3"
-                        id={`size`}
-                        inline
-                        type="radio"
-                        label={`${size}`}
-                      />
-                    );
-                  })}
-                </Card.Text>
+                <Card.Text>{product.brandName}</Card.Text>
+                <Card.Title className="fs-1">{product.productName}</Card.Title>
+                <Card.Text>Size: </Card.Text>
 
-                <Card.Text>
-                  Color:{" "}
-                  {color.map((col) => {
-                    return (
-                      <Form.Check
-                        inline
-                        className="mb-3"
-                        type="checkbox"
-                        label={col}
-                      />
-                    );
-                  })}
+                <Card.Text>Color: </Card.Text>
+                <Card.Text className="fs-4">
+                  Price : &#8377; {product.price}
                 </Card.Text>
-                <Card.Text className="fs-4">Price : $830</Card.Text>
                 <Button className="mb-3 w-100" variant="secondary">
                   Add to cart{" "}
                   <FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
                 </Button>
-                <Card.Text className="fs-6 fw-bolder">Stock left: 15</Card.Text>
+                <Card.Text className="fs-6 fw-bolder">
+                  Stock left: {product.inStock}
+                </Card.Text>
               </Card.Body>
             </Card>
           </Col>
